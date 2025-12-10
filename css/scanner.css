@@ -1,0 +1,167 @@
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================
+   BASE
+========================= */
+body {
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    font-family: system-ui, -apple-system, "Inter", "Roboto", sans-serif;
+    overflow: hidden;
+}
+
+/* =========================
+   VARIABLES
+========================= */
+:root {
+    --gap: clamp(12px, 3vw, 20px);
+    --radius: clamp(12px, 3vw, 20px);
+
+    --fs-title: clamp(1.1rem, 4vw, 1.4rem);
+    --fs-text: clamp(0.9rem, 3vw, 1rem);
+
+    --accent: #00ff88;
+    --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* =========================
+   PAGE LAYOUT
+========================= */
+.scanner-page {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+.scanner-header {
+    padding: var(--gap);
+    text-align: center;
+    font-size: var(--fs-title);
+    background: linear-gradient(to bottom, #000, transparent);
+    z-index: 2;
+}
+
+/* =========================
+   CAMERA ZONE
+========================= */
+.scanner-camera {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* video / canvas */
+.scanner-camera video,
+.scanner-camera canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =========================
+   SCAN FRAME
+========================= */
+.scan-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(72vw, 280px);
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    border: 3px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 0 0 9999px var(--overlay);
+}
+
+/* scan animation line */
+.scan-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+    animation: scan 2s infinite ease-in-out;
+}
+
+@keyframes scan {
+    0% {
+        top: 0;
+    }
+
+    50% {
+        top: calc(100% - 3px);
+    }
+
+    100% {
+        top: 0;
+    }
+}
+
+/* =========================
+   RESULT PANEL
+========================= */
+.scanner-result {
+    background: #fff;
+    color: #111;
+    padding: var(--gap);
+    border-radius: var(--radius) var(--radius) 0 0;
+    display: grid;
+    gap: 10px;
+    z-index: 2;
+}
+
+.scanner-result h2 {
+    font-size: var(--fs-title);
+}
+
+.scanner-result p {
+    font-size: var(--fs-text);
+    color: #555;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.scanner-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: var(--fs-text);
+    border: none;
+    border-radius: var(--radius);
+    background: #111;
+    color: #fff;
+}
+
+/* =========================
+   DESKTOP VIEW (PHONE MOCK)
+========================= */
+@media (min-width: 900px) {
+    body {
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .scanner-page {
+        width: 390px;
+        height: 720px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+    }
+}
